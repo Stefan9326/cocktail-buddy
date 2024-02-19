@@ -22,7 +22,7 @@ function App() {
   return (
     <div className="App">
       <SearchBar fetchResults={fetchResults} />
-      {results.map((result) => {
+      {results.slice(0, 10).map((result) => {
         return <ResultTile key={result.idDrink} result={result} />;
       })}
     </div>
