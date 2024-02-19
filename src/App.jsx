@@ -6,6 +6,7 @@ import ResultsContainer from "./components/ResultsContainer/ResultsContainer";
 
 function App() {
   const [results, setResults] = useState([]);
+  const [resultsLimit, setResultsLimit] = useState(10);
 
   const fetchResults = async (query) => {
     try {
@@ -19,10 +20,17 @@ function App() {
     }
   };
 
+  const showMoreResults = () => {
+    setResultsLimit(resultsLimit + 10);
+  };
+
   return (
     <div className="App">
       <SearchBar fetchResults={fetchResults} />
-      <ResultsContainer results={results} />
+      <ResultsContainer results={results} resultsLimit={resultsLimit} />
+      {results.length > 0 && (
+        <button onClick={showMoreResults}>Show more</button>
+      )}
     </div>
   );
 }
