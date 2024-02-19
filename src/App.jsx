@@ -2,7 +2,7 @@ import Axios from "axios";
 import { useState } from "react";
 import "./App.css";
 import SearchBar from "./components/SearchBar/SearchBar";
-import ResultTile from "./components/ResultTile/ResultTile";
+import ResultsContainer from "./components/ResultsContainer/ResultsContainer";
 
 function App() {
   const [results, setResults] = useState([]);
@@ -22,9 +22,7 @@ function App() {
   return (
     <div className="App">
       <SearchBar fetchResults={fetchResults} />
-      {results.slice(0, 10).map((result) => {
-        return <ResultTile key={result.idDrink} result={result} />;
-      })}
+      <ResultsContainer results={results} />
     </div>
   );
 }
