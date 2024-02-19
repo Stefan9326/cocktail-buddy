@@ -2,12 +2,7 @@ import "./SearchBar.css";
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const SearchBar = ({ fetchResults }) => {
-  // component code here
-
-  SearchBar.propTypes = {
-    fetchResults: PropTypes.func.isRequired,
-  };
+const SearchBar = ({ fetchResults, setResultsDisplayLimit }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleChange = (event) => {
@@ -16,6 +11,7 @@ const SearchBar = ({ fetchResults }) => {
 
   const handleClick = (event) => {
     event.preventDefault();
+    setResultsDisplayLimit(10);
     fetchResults(inputValue);
   };
 
@@ -27,6 +23,11 @@ const SearchBar = ({ fetchResults }) => {
       </form>
     </div>
   );
+};
+
+SearchBar.propTypes = {
+  fetchResults: PropTypes.func.isRequired,
+  setResultsDisplayLimit: PropTypes.func.isRequired,
 };
 
 export default SearchBar;
