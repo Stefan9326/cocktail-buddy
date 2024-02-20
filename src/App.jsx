@@ -13,7 +13,7 @@ function App() {
       const response = await Axios.get(
         `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${query}`
       );
-      console.log(response.data.drinks);
+      console.log(response);
       setResults(response.data.drinks);
     } catch (error) {
       console.error(error);
@@ -31,7 +31,7 @@ function App() {
         setResultsDisplayLimit={setResultsDisplayLimit}
       />
       <ResultsContainer results={results} resultsLimit={resultsDisplayLimit} />
-      {results.length > 0 && (
+      {results && results.length > 0 && (
         <button onClick={showMoreResults}>Show more</button>
       )}
     </div>

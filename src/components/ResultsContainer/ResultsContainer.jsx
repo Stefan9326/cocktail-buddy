@@ -5,15 +5,19 @@ import "./ResultsContainer.css";
 const ResultsContainer = ({ results, resultsLimit }) => {
   return (
     <div className="results-container">
-      {results.slice(0, resultsLimit).map((result) => {
-        return <ResultTile key={result.idDrink} result={result} />;
-      })}
+      {results ? (
+        results.slice(0, resultsLimit).map((result) => {
+          return <ResultTile key={result.idDrink} result={result} />;
+        })
+      ) : (
+        <p>No results found</p>
+      )}
     </div>
   );
 };
 
 ResultsContainer.propTypes = {
-  results: PropTypes.array.isRequired,
+  results: PropTypes.array,
   resultsLimit: PropTypes.number.isRequired,
 };
 
