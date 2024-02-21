@@ -12,9 +12,11 @@ const ResultTile = ({ result }) => {
   return (
     <div className="result-tile">
       {result.strDrink}
-      <img src={result.strDrinkThumb} alt={`Photo of ${result.strDrink}`} />
-      <button onClick={toggleRecipeDisplay}>Show recipe</button>
-      {recipeDisplayed && <p>RECIPE</p>}
+      <div className="right">
+        <img src={result.strDrinkThumb} alt={`Photo of ${result.strDrink}`} />
+        <button onClick={toggleRecipeDisplay}>Show recipe</button>
+        {recipeDisplayed && <p>RECIPE</p>}
+      </div>
     </div>
   );
 };
