@@ -1,9 +1,22 @@
-import "./SearchBar.css";
 import { useState } from "react";
+import Axios from "axios";
 import PropTypes from "prop-types";
+import "./SearchBar.css";
 
-const SearchBar = ({ fetchResults, setResultsDisplayLimit }) => {
+const SearchBar = ({ setResults, setResultsDisplayLimit }) => {
   const [inputValue, setInputValue] = useState("");
+
+  const fetchResults = async () => {
+    try {
+      const response = await Axios.get(
+        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputValue}`
+      );
+      console.log(response);
+      setResults(response.data.drinks);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
@@ -12,7 +25,7 @@ const SearchBar = ({ fetchResults, setResultsDisplayLimit }) => {
   const handleClick = (event) => {
     event.preventDefault();
     setResultsDisplayLimit(10);
-    fetchResults(inputValue);
+    fetchResults();
   };
 
   return (
@@ -26,7 +39,7 @@ const SearchBar = ({ fetchResults, setResultsDisplayLimit }) => {
 };
 
 SearchBar.propTypes = {
-  fetchResults: PropTypes.func.isRequired,
+  setResults: PropTypes.func.isRequired,
   setResultsDisplayLimit: PropTypes.func.isRequired,
 };
 
