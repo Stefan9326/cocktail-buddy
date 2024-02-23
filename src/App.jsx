@@ -34,7 +34,6 @@ function App() {
     };
     fetchIngredientsList();
   }, []);
-  console.log(ingredientsList);
 
   const showMoreResults = () => {
     setResultsDisplayLimit(resultsDisplayLimit + 10);
@@ -45,6 +44,7 @@ function App() {
       <SearchBar
         setResults={setResults}
         setResultsDisplayLimit={setResultsDisplayLimit}
+        ingredientsList={ingredientsList}
       />
       <ResultsContainer results={results} resultsLimit={resultsDisplayLimit} />
       {results && results.length > 0 && (

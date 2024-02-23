@@ -3,7 +3,7 @@ import Axios from "axios";
 import PropTypes from "prop-types";
 import "./SearchBar.css";
 
-const SearchBar = ({ setResults, setResultsDisplayLimit }) => {
+const SearchBar = ({ setResults, setResultsDisplayLimit, ingredientsList }) => {
   const [inputValue, setInputValue] = useState("");
 
   const fetchResults = async () => {
@@ -31,7 +31,15 @@ const SearchBar = ({ setResults, setResultsDisplayLimit }) => {
   return (
     <div className="search-bar">
       <form action="get">
-        <input value={inputValue} onChange={handleChange} type="text" />
+        <select value={inputValue} onChange={handleChange} name="ingredient">
+          {ingredientsList.map((ingredient) => {
+            return (
+              <option key={ingredient} value={ingredient}>
+                {ingredient}
+              </option>
+            );
+          })}
+        </select>
         <button onClick={handleClick}>Search</button>
       </form>
     </div>
@@ -41,6 +49,7 @@ const SearchBar = ({ setResults, setResultsDisplayLimit }) => {
 SearchBar.propTypes = {
   setResults: PropTypes.func.isRequired,
   setResultsDisplayLimit: PropTypes.func.isRequired,
+  ingredientsList: PropTypes.array.isRequired,
 };
 
 export default SearchBar;
