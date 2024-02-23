@@ -8,6 +8,7 @@ function App() {
   const [ingredientsList, setIngredientsList] = useState([]);
   const [results, setResults] = useState([]);
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
+  const [ingredientDropdowns, setIngredientDropdowns] = useState([]);
 
   useEffect(() => {
     const fetchIngredientsList = async () => {
@@ -35,6 +36,17 @@ function App() {
     fetchIngredientsList();
   }, []);
 
+  const addIngredient = () => {
+    const newDropdown = (
+      <SearchBar
+        setResults={setResults}
+        setResultsDisplayLimit={setResultsDisplayLimit}
+        ingredientsList={ingredientsList}
+      />
+    );
+    setIngredientDropdowns([...ingredientDropdowns, newDropdown]);
+  };
+
   const showMoreResults = () => {
     setResultsDisplayLimit(resultsDisplayLimit + 10);
   };
@@ -46,6 +58,8 @@ function App() {
         setResultsDisplayLimit={setResultsDisplayLimit}
         ingredientsList={ingredientsList}
       />
+      {ingredientDropdowns.map((dropdown) => dropdown)}
+      <button onClick={addIngredient}>Add ingredient</button>
       <ResultsContainer results={results} resultsLimit={resultsDisplayLimit} />
       {results && results.length > 0 && (
         <button onClick={showMoreResults}>Show more</button>
