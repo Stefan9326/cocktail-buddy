@@ -25,6 +25,10 @@ const ResultTile = ({ result }) => {
     setRecipeDisplayed(!recipeDisplayed);
   };
 
+  const ingredients = Object.keys(cocktailInfo)
+    .filter((key) => key.startsWith("strIngredient"))
+    .map((key) => cocktailInfo[key]);
+
   return (
     <div className="result-tile">
       {result.strDrink}
@@ -33,6 +37,16 @@ const ResultTile = ({ result }) => {
         <button onClick={toggleRecipeDisplay}>Show recipe</button>
         {recipeDisplayed && (
           <div>
+            <ul>
+              {ingredients.map((ingredient, index) =>
+                ingredient ? (
+                  <li key={ingredient + index}>
+                    {ingredient}
+                    {cocktailInfo[`strMeasure${index + 1}`]}
+                  </li>
+                ) : null
+              )}
+            </ul>
             <p>{cocktailInfo["strInstructions"]}</p>
           </div>
         )}
