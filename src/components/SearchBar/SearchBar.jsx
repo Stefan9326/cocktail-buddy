@@ -32,6 +32,9 @@ const SearchBar = ({ setResults, setResultsDisplayLimit, ingredientsList }) => {
     <div className="search-bar">
       <form action="get">
         <select value={inputValue} onChange={handleChange} name="ingredient">
+          <option value="" selected disabled>
+            Choose an ingredient
+          </option>
           {ingredientsList.map((ingredient) => {
             return (
               <option key={ingredient} value={ingredient}>
