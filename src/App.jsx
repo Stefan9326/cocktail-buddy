@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Axios from "axios";
 import IngredientDropdown from "./components/SearchBar/IngredientDropdown";
 import ResultsContainer from "./components/ResultsContainer/ResultsContainer";
 import "./App.css";
+
+const queryClient = new QueryClient();
 
 function App() {
   const [ingredientsList, setIngredientsList] = useState([]);
@@ -52,19 +55,24 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <IngredientDropdown
-        setResults={setResults}
-        setResultsDisplayLimit={setResultsDisplayLimit}
-        ingredientsList={ingredientsList}
-      />
-      {ingredientDropdowns.map((dropdown) => dropdown)}
-      <button onClick={addIngredient}>Add ingredient</button>
-      <ResultsContainer results={results} resultsLimit={resultsDisplayLimit} />
-      {results && results.length > 0 && (
-        <button onClick={showMoreResults}>Show more</button>
-      )}
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="App">
+        <IngredientDropdown
+          setResults={setResults}
+          setResultsDisplayLimit={setResultsDisplayLimit}
+          ingredientsList={ingredientsList}
+        />
+        {ingredientDropdowns.map((dropdown) => dropdown)}
+        <button onClick={addIngredient}>Add ingredient</button>
+        <ResultsContainer
+          results={results}
+          resultsLimit={resultsDisplayLimit}
+        />
+        {results && results.length > 0 && (
+          <button onClick={showMoreResults}>Show more</button>
+        )}
+      </div>
+    </QueryClientProvider>
   );
 }
 
