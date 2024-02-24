@@ -1,41 +1,19 @@
-import { useState } from "react";
-import Axios from "axios";
 import PropTypes from "prop-types";
 import "./IngredientDropdown.css";
 
 const IngredientDropdown = ({
-  setResults,
-  setResultsDisplayLimit,
   ingredientsList,
+  dropdownValue,
+  setDropdownValue,
 }) => {
-  const [inputValue, setInputValue] = useState("");
-
-  const fetchResults = async () => {
-    try {
-      const response = await Axios.get(
-        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputValue}`
-      );
-      console.log(response);
-      setResults(response.data.drinks);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleClick = (event) => {
-    event.preventDefault();
-    setResultsDisplayLimit(10);
-    fetchResults();
+    setDropdownValue(event.target.value);
   };
 
   return (
     <div className="search-bar">
       <form action="get">
-        <select value={inputValue} onChange={handleChange} name="ingredient">
+        <select value={dropdownValue} onChange={handleChange} name="ingredient">
           <option value="" disabled>
             Choose an ingredient
           </option>
@@ -47,15 +25,14 @@ const IngredientDropdown = ({
             );
           })}
         </select>
-        <button onClick={handleClick}>Search</button>
       </form>
     </div>
   );
 };
 
 IngredientDropdown.propTypes = {
-  setResults: PropTypes.func.isRequired,
-  setResultsDisplayLimit: PropTypes.func.isRequired,
+  dropdownValue: PropTypes.string.isRequired,
+  setDropdownValue: PropTypes.func.isRequired,
   ingredientsList: PropTypes.array.isRequired,
 };
 

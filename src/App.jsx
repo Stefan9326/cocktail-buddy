@@ -12,6 +12,7 @@ function App() {
   const [results, setResults] = useState([]);
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
   const [ingredientDropdowns, setIngredientDropdowns] = useState([]);
+  const [dropdownValue, setDropdownValue] = useState("");
 
   useEffect(() => {
     const fetchIngredientsList = async () => {
@@ -39,11 +40,28 @@ function App() {
     fetchIngredientsList();
   }, []);
 
+  const fetchResults = async () => {
+    try {
+      const response = await Axios.get(
+        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${dropdownValue}`
+      );
+      console.log(response);
+      setResults(response.data.drinks);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleClick = () => {
+    setResultsDisplayLimit(10);
+    fetchResults();
+  };
+
   const addIngredient = () => {
     const newDropdown = (
       <IngredientDropdown
-        setResults={setResults}
-        setResultsDisplayLimit={setResultsDisplayLimit}
+        dropdownValue={dropdownValue}
+        setDropdownValue={setDropdownValue}
         ingredientsList={ingredientsList}
       />
     );
@@ -58,12 +76,17 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <IngredientDropdown
-          setResults={setResults}
-          setResultsDisplayLimit={setResultsDisplayLimit}
+          dropdownValue={dropdownValue}
+          setDropdownValue={setDropdownValue}
           ingredientsList={ingredientsList}
         />
         {ingredientDropdowns.map((dropdown) => dropdown)}
-        <button onClick={addIngredient}>Add ingredient</button>
+        <button id="add-ingr-btn" onClick={addIngredient}>
+          Add ingredient
+        </button>
+        <button id="search-btn" onClick={handleClick}>
+          Search
+        </button>
         <ResultsContainer
           results={results}
           resultsLimit={resultsDisplayLimit}
