@@ -1,9 +1,13 @@
 import { useState } from "react";
 import Axios from "axios";
 import PropTypes from "prop-types";
-import "./SearchBar.css";
+import "./IngredientDropdown.css";
 
-const SearchBar = ({ setResults, setResultsDisplayLimit, ingredientsList }) => {
+const IngredientDropdown = ({
+  setResults,
+  setResultsDisplayLimit,
+  ingredientsList,
+}) => {
   const [inputValue, setInputValue] = useState("");
 
   const fetchResults = async () => {
@@ -32,7 +36,7 @@ const SearchBar = ({ setResults, setResultsDisplayLimit, ingredientsList }) => {
     <div className="search-bar">
       <form action="get">
         <select value={inputValue} onChange={handleChange} name="ingredient">
-          <option value="" selected disabled>
+          <option value="" disabled>
             Choose an ingredient
           </option>
           {ingredientsList.map((ingredient) => {
@@ -49,10 +53,10 @@ const SearchBar = ({ setResults, setResultsDisplayLimit, ingredientsList }) => {
   );
 };
 
-SearchBar.propTypes = {
+IngredientDropdown.propTypes = {
   setResults: PropTypes.func.isRequired,
   setResultsDisplayLimit: PropTypes.func.isRequired,
   ingredientsList: PropTypes.array.isRequired,
 };
 
-export default SearchBar;
+export default IngredientDropdown;

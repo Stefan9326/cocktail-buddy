@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import SearchBar from "./components/SearchBar/SearchBar";
+import IngredientDropdown from "./components/SearchBar/IngredientDropdown";
 import ResultsContainer from "./components/ResultsContainer/ResultsContainer";
 import "./App.css";
 
@@ -38,7 +38,7 @@ function App() {
 
   const addIngredient = () => {
     const newDropdown = (
-      <SearchBar
+      <IngredientDropdown
         setResults={setResults}
         setResultsDisplayLimit={setResultsDisplayLimit}
         ingredientsList={ingredientsList}
@@ -53,7 +53,7 @@ function App() {
 
   return (
     <div className="App">
-      <SearchBar
+      <IngredientDropdown
         setResults={setResults}
         setResultsDisplayLimit={setResultsDisplayLimit}
         ingredientsList={ingredientsList}
