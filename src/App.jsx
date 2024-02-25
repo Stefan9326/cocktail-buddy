@@ -11,8 +11,10 @@ function App() {
   const [ingredientsList, setIngredientsList] = useState([]);
   const [results, setResults] = useState([]);
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
-  const [ingredientDropdowns, setIngredientDropdowns] = useState([]);
-  const [dropdownValue, setDropdownValue] = useState("");
+  // Necessary to keep track of the selected ingredient for each dropdown and change dropdownValues accordingly
+  const [dropdownIds, setDropdownIds] = useState([1]);
+  // Values of the dropdowns, used to fetch the results
+  const [dropdownValues, setDropdownValues] = useState({});
 
   useEffect(() => {
     const fetchIngredientsList = async () => {
@@ -40,10 +42,11 @@ function App() {
     fetchIngredientsList();
   }, []);
 
+  // This will be replaced by useQueries hook below
   const fetchResults = async () => {
     try {
       const response = await Axios.get(
-        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${dropdownValue}`
+        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${dropdownValues[1]}`
       );
       console.log(response);
       setResults(response.data.drinks);
@@ -52,20 +55,29 @@ function App() {
     }
   };
 
-  const handleClick = () => {
+  // This needs to be finished. It first fetches results based on ingredients selected.
+  // I think this needs to be moved into the handleSearchClick function so that it only executes onClick.
+  // const queryResults = useQueries({
+  //   queries: Object.values(dropdownValues).map((ingredient) => {
+  //     return {
+  //       queryKey: ["results", ingredient],
+  //       queryFn: () => {
+  //         return Axios.get(
+  //           `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`
+  //         );
+  //       },
+  //     };
+  //   }),
+  // });
+
+  const handleSearchClick = () => {
+    console.log(dropdownValues);
     setResultsDisplayLimit(10);
     fetchResults();
   };
 
   const addIngredient = () => {
-    const newDropdown = (
-      <IngredientDropdown
-        dropdownValue={dropdownValue}
-        setDropdownValue={setDropdownValue}
-        ingredientsList={ingredientsList}
-      />
-    );
-    setIngredientDropdowns([...ingredientDropdowns, newDropdown]);
+    setDropdownIds([...dropdownIds, dropdownIds.length + 1]);
   };
 
   const showMoreResults = () => {
@@ -75,16 +87,19 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
-        <IngredientDropdown
-          dropdownValue={dropdownValue}
-          setDropdownValue={setDropdownValue}
-          ingredientsList={ingredientsList}
-        />
-        {ingredientDropdowns.map((dropdown) => dropdown)}
+        {dropdownIds.map((id) => (
+          <IngredientDropdown
+            key={id}
+            id={id}
+            dropdownValues={dropdownValues}
+            setDropdownValues={setDropdownValues}
+            ingredientsList={ingredientsList}
+          />
+        ))}
         <button id="add-ingr-btn" onClick={addIngredient}>
           Add ingredient
         </button>
-        <button id="search-btn" onClick={handleClick}>
+        <button id="search-btn" onClick={handleSearchClick}>
           Search
         </button>
         <ResultsContainer

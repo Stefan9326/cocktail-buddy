@@ -1,13 +1,18 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import "./IngredientDropdown.css";
 
 const IngredientDropdown = ({
+  id,
   ingredientsList,
-  dropdownValue,
-  setDropdownValue,
+  dropdownValues,
+  setDropdownValues,
 }) => {
+  const [dropdownValue, setDropdownValue] = useState("");
+
   const handleChange = (event) => {
     setDropdownValue(event.target.value);
+    setDropdownValues({ ...dropdownValues, [id]: event.target.value });
   };
 
   return (
@@ -31,8 +36,9 @@ const IngredientDropdown = ({
 };
 
 IngredientDropdown.propTypes = {
-  dropdownValue: PropTypes.string.isRequired,
-  setDropdownValue: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  dropdownValues: PropTypes.object.isRequired,
+  setDropdownValues: PropTypes.func.isRequired,
   ingredientsList: PropTypes.array.isRequired,
 };
 
