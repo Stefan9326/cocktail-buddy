@@ -1,14 +1,11 @@
-import { useState, useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Axios from "axios";
 import IngredientDropdown from "./components/SearchBar/IngredientDropdown";
 import ResultsContainer from "./components/ResultsContainer/ResultsContainer";
 import "./App.css";
 
-const queryClient = new QueryClient();
-
 function App() {
-  const [ingredientsList, setIngredientsList] = useState([]);
   const [results, setResults] = useState([]);
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
   // Necessary to keep track of the selected ingredient for each dropdown and change dropdownValues accordingly
@@ -16,31 +13,22 @@ function App() {
   // Values of the dropdowns, used to fetch the results
   const [dropdownValues, setDropdownValues] = useState({});
 
-  useEffect(() => {
-    const fetchIngredientsList = async () => {
-      let ingredients = localStorage.getItem("ingredients");
-
-      if (!ingredients) {
-        try {
-          const response = await Axios.get(
-            "https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list"
-          );
-          localStorage.setItem(
-            "ingredients",
-            JSON.stringify(response.data.drinks)
-          );
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        ingredients = JSON.parse(ingredients).map(
-          (ingredient) => ingredient.strIngredient1
+  // Fetch ingredients list
+  const { data } = useQuery({
+    queryKey: ["ingredients"],
+    queryFn: async () => {
+      try {
+        const response = await Axios.get(
+          "https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list"
         );
+        return response.data.drinks;
+      } catch (error) {
+        throw error(error);
       }
-      setIngredientsList(ingredients);
-    };
-    fetchIngredientsList();
-  }, []);
+    },
+    staleTime: Infinity,
+  });
+  console.log(data);
 
   // This will be replaced by useQueries hook below
   const fetchResults = async () => {
@@ -85,7 +73,7 @@ function App() {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
+    data && (
       <div className="App">
         {dropdownIds.map((id) => (
           <IngredientDropdown
@@ -93,7 +81,7 @@ function App() {
             id={id}
             dropdownValues={dropdownValues}
             setDropdownValues={setDropdownValues}
-            ingredientsList={ingredientsList}
+            data={data}
           />
         ))}
         <button id="add-ingr-btn" onClick={addIngredient}>
@@ -110,7 +98,7 @@ function App() {
           <button onClick={showMoreResults}>Show more</button>
         )}
       </div>
-    </QueryClientProvider>
+    )
   );
 }
 

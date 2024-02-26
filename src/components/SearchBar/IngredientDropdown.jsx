@@ -4,7 +4,7 @@ import "./IngredientDropdown.css";
 
 const IngredientDropdown = ({
   id,
-  ingredientsList,
+  data,
   dropdownValues,
   setDropdownValues,
 }) => {
@@ -22,10 +22,13 @@ const IngredientDropdown = ({
           <option value="" disabled>
             Choose an ingredient
           </option>
-          {ingredientsList.map((ingredient) => {
+          {data.map((ingredient) => {
             return (
-              <option key={ingredient} value={ingredient}>
-                {ingredient}
+              <option
+                key={ingredient.strIngredient1}
+                value={ingredient.strIngredient1}
+              >
+                {ingredient.strIngredient1}
               </option>
             );
           })}
@@ -39,7 +42,7 @@ IngredientDropdown.propTypes = {
   id: PropTypes.number.isRequired,
   dropdownValues: PropTypes.object.isRequired,
   setDropdownValues: PropTypes.func.isRequired,
-  ingredientsList: PropTypes.array.isRequired,
+  data: PropTypes.array,
 };
 
 export default IngredientDropdown;
