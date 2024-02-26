@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Axios from "axios";
+import { fetchIngredientsList } from "./api";
 import IngredientDropdown from "./components/SearchBar/IngredientDropdown";
 import ResultsContainer from "./components/ResultsContainer/ResultsContainer";
 import "./App.css";
@@ -16,16 +17,7 @@ function App() {
   // Fetch ingredients list
   const { data } = useQuery({
     queryKey: ["ingredients"],
-    queryFn: async () => {
-      try {
-        const response = await Axios.get(
-          "https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list"
-        );
-        return response.data.drinks;
-      } catch (error) {
-        throw error(error);
-      }
-    },
+    queryFn: fetchIngredientsList,
     staleTime: Infinity,
   });
   console.log(data);
