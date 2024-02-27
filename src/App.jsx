@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
@@ -29,16 +29,12 @@ function App() {
           );
         })
       );
+      console.log(responses);
       setResults(responses.map((result) => result.data.drinks));
     } catch (error) {
       console.error(error);
     }
   };
-
-  // This is a temporary useEffect to log results to the console
-  useEffect(() => {
-    console.log(results);
-  }, [results]);
 
   // This needs to be finished. It first fetches results based on ingredients selected.
   // I think this needs to be moved into the handleSearchClick function so that it only executes onClick.
@@ -92,19 +88,25 @@ function App() {
               ingredients={data}
             />
           ))}
-        <button id="add-ingr-btn" onClick={addIngredient}>
-          Add ingredient
-        </button>
-        <button id="search-btn" onClick={handleSearchClick}>
-          Search
-        </button>
-        {/* <ResultsContainer
-          results={results}
-          resultsLimit={resultsDisplayLimit}
-        />
+        {dropdowns[0].value && (
+          <>
+            <button id="add-ingr-btn" onClick={addIngredient}>
+              Add ingredient
+            </button>
+            <button id="search-btn" onClick={handleSearchClick}>
+              Search
+            </button>
+          </>
+        )}
         {results && results.length > 0 && (
-          <button onClick={showMoreResults}>Show more</button>
-        )} */}
+          <>
+            <ResultsContainer
+              results={results}
+              resultsLimit={resultsDisplayLimit}
+            />
+            <button onClick={showMoreResults}>Show more</button>
+          </>
+        )}
       </div>
     )
   );
