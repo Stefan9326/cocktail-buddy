@@ -23,11 +23,13 @@ function App() {
   const fetchResults = async () => {
     try {
       const responses = await Promise.all(
-        dropdowns.map((dropdown) => {
-          return Axios.get(
-            `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${dropdown.value}`
-          );
-        })
+        dropdowns
+          .filter((dropdown) => dropdown.value)
+          .map((dropdown) => {
+            return Axios.get(
+              `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${dropdown.value}`
+            );
+          })
       );
       console.log(responses);
       setResults(responses.map((result) => result.data.drinks));
