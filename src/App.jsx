@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
@@ -18,20 +18,27 @@ function App() {
     queryFn: fetchIngredientsList,
     staleTime: Infinity,
   });
-  console.log(data);
 
   // This will be replaced by useQueries hook below
   const fetchResults = async () => {
     try {
-      const response = await Axios.get(
-        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${dropdowns[0].value}`
+      const responses = await Promise.all(
+        dropdowns.map((dropdown) => {
+          return Axios.get(
+            `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${dropdown.value}`
+          );
+        })
       );
-      console.log(response);
-      setResults(response.data.drinks);
+      setResults(responses.map((result) => result.data.drinks));
     } catch (error) {
       console.error(error);
     }
   };
+
+  // This is a temporary useEffect to log results to the console
+  useEffect(() => {
+    console.log(results);
+  }, [results]);
 
   // This needs to be finished. It first fetches results based on ingredients selected.
   // I think this needs to be moved into the handleSearchClick function so that it only executes onClick.
@@ -91,13 +98,13 @@ function App() {
         <button id="search-btn" onClick={handleSearchClick}>
           Search
         </button>
-        <ResultsContainer
+        {/* <ResultsContainer
           results={results}
           resultsLimit={resultsDisplayLimit}
         />
         {results && results.length > 0 && (
           <button onClick={showMoreResults}>Show more</button>
-        )}
+        )} */}
       </div>
     )
   );
