@@ -2,10 +2,12 @@ import PropTypes from "prop-types";
 import ResultTile from "../ResultTile/ResultTile";
 import "./ResultsContainer.css";
 
-const ResultsContainer = ({ results, resultsLimit }) => {
+const ResultsContainer = ({ results, resultsLimit, dropdowns }) => {
   const drinksCount = {};
   let commonDrinks = [];
   let drinksToDisplay = results[0];
+  let noExactResults = false;
+
   if (results.length > 1) {
     results.forEach((result) => {
       result.forEach((drink) => {
@@ -29,6 +31,7 @@ const ResultsContainer = ({ results, resultsLimit }) => {
         commonDrinks.includes(drink.strDrink)
       );
     } else {
+      noExactResults = true;
       drinksToDisplay = Object.entries(drinksCount)
         .sort((a, b) => b[1] - a[1])
         .map((drinkCount) => {
@@ -38,14 +41,20 @@ const ResultsContainer = ({ results, resultsLimit }) => {
         });
     }
   }
-  const noExactResults = !commonDrinks.length;
 
   return (
     <div className="results-container">
       {noExactResults && <p>No exact results found</p>}
       {results.length ? (
         drinksToDisplay.slice(0, resultsLimit).map((result) => {
-          return <ResultTile key={result.idDrink} result={result} />;
+          return (
+            <ResultTile
+              key={result.idDrink}
+              result={result}
+              noExactResults={noExactResults}
+              dropdowns={dropdowns}
+            />
+          );
         })
       ) : (
         <p>No results found</p>
@@ -55,6 +64,7 @@ const ResultsContainer = ({ results, resultsLimit }) => {
 };
 
 ResultsContainer.propTypes = {
+  dropdowns: PropTypes.array.isRequired,
   results: PropTypes.array.isRequired,
   resultsLimit: PropTypes.number.isRequired,
 };

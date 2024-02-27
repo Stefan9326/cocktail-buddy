@@ -105,6 +105,7 @@ function App() {
             <ResultsContainer
               results={results}
               resultsLimit={resultsDisplayLimit}
+              dropdowns={dropdowns}
             />
             <button onClick={showMoreResults}>Show more</button>
           </>
