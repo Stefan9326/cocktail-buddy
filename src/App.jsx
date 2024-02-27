@@ -18,16 +18,21 @@ function App() {
     queryFn: fetchIngredientsList,
     staleTime: Infinity,
   });
-  console.log(data);
 
   // This will be replaced by useQueries hook below
   const fetchResults = async () => {
     try {
-      const response = await Axios.get(
-        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${dropdowns[0].value}`
+      const responses = await Promise.all(
+        dropdowns
+          .filter((dropdown) => dropdown.value)
+          .map((dropdown) => {
+            return Axios.get(
+              `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${dropdown.value}`
+            );
+          })
       );
-      console.log(response);
-      setResults(response.data.drinks);
+      console.log(responses);
+      setResults(responses.map((result) => result.data.drinks));
     } catch (error) {
       console.error(error);
     }
@@ -85,18 +90,25 @@ function App() {
               ingredients={data}
             />
           ))}
-        <button id="add-ingr-btn" onClick={addIngredient}>
-          Add ingredient
-        </button>
-        <button id="search-btn" onClick={handleSearchClick}>
-          Search
-        </button>
-        <ResultsContainer
-          results={results}
-          resultsLimit={resultsDisplayLimit}
-        />
-        {results && results.length > 0 && (
-          <button onClick={showMoreResults}>Show more</button>
+        {dropdowns[0].value && (
+          <>
+            <button id="add-ingr-btn" onClick={addIngredient}>
+              Add ingredient
+            </button>
+            <button id="search-btn" onClick={handleSearchClick}>
+              Search
+            </button>
+          </>
+        )}
+        {results.length > 0 && (
+          <>
+            <ResultsContainer
+              results={results}
+              resultsLimit={resultsDisplayLimit}
+              dropdowns={dropdowns}
+            />
+            <button onClick={showMoreResults}>Show more</button>
+          </>
         )}
       </div>
     )

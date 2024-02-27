@@ -3,7 +3,7 @@ import Axios from "axios";
 import PropTypes from "prop-types";
 import "./ResultTile.css";
 
-const ResultTile = ({ result }) => {
+const ResultTile = ({ result, noExactResults, dropdowns }) => {
   const [cocktailInfo, setCocktailInfo] = useState([]);
   const [recipeDisplayed, setRecipeDisplayed] = useState(false);
 
@@ -26,12 +26,29 @@ const ResultTile = ({ result }) => {
   };
 
   const ingredients = Object.keys(cocktailInfo)
-    .filter((key) => key.startsWith("strIngredient"))
-    .map((key) => cocktailInfo[key]);
+    .filter((key) => key.startsWith("strIngredient") && cocktailInfo[key])
+    .map((key) => cocktailInfo[key])
+    .map((ingredient) => ingredient[0] + ingredient.slice(1).toLowerCase());
+
+  console.log(ingredients);
+
+  const matchedIngredients = dropdowns
+    .map(
+      (dropdown) => dropdown.value[0] + dropdown.value.slice(1).toLowerCase()
+    )
+    .filter((value) => ingredients.includes(value));
 
   return (
     <div className="result-tile">
       {result.strDrink}
+      {noExactResults && (
+        <p>
+          Matched ingredients:{" "}
+          <em>
+            <strong>{matchedIngredients.join(", ")}</strong>
+          </em>
+        </p>
+      )}
       <div className="right">
         <img src={result.strDrinkThumb} alt={`Photo of ${result.strDrink}`} />
         <button onClick={toggleRecipeDisplay}>Show recipe</button>
@@ -57,6 +74,8 @@ const ResultTile = ({ result }) => {
 
 ResultTile.propTypes = {
   result: PropTypes.object.isRequired,
+  noExactResults: PropTypes.bool.isRequired,
+  dropdowns: PropTypes.array.isRequired,
 };
 
 export default ResultTile;
