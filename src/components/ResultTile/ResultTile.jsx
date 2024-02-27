@@ -1,31 +1,24 @@
-import { useState, useEffect } from "react";
-import Axios from "axios";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCocktailById } from "../../api";
 import PropTypes from "prop-types";
 import "./ResultTile.css";
 
 const ResultTile = ({ result, noExactResults, dropdowns }) => {
-  const [cocktailInfo, setCocktailInfo] = useState([]);
   const [recipeDisplayed, setRecipeDisplayed] = useState(false);
-
-  useEffect(() => {
-    const fetchCocktailById = async () => {
-      try {
-        const response = await Axios.get(
-          `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${result.idDrink}`
-        );
-        setCocktailInfo(response.data.drinks[0]);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchCocktailById();
-  }, [result.idDrink]);
 
   const toggleRecipeDisplay = () => {
     setRecipeDisplayed(!recipeDisplayed);
   };
 
-  const ingredients = Object.keys(cocktailInfo)
+  const { data: cocktailInfo } = useQuery({
+    queryKey: ["ingredients", result.idDrink],
+    queryFn: fetchCocktailById(result),
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+
+  const ingredients = Object.keys(cocktailInfo ?? {})
     .filter((key) => key.startsWith("strIngredient") && cocktailInfo[key])
     .map((key) => cocktailInfo[key])
     .map((ingredient) => ingredient[0] + ingredient.slice(1).toLowerCase());
