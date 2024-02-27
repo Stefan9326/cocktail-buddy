@@ -13,10 +13,11 @@ function App() {
   const [dropdowns, setDropdowns] = useState([{ id: uuidv4(), value: "" }]);
 
   // Fetch ingredients list
-  const { data } = useQuery({
+  const { data: ingredientsList } = useQuery({
     queryKey: ["ingredients"],
     queryFn: fetchIngredientsList,
     staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
   // This will be replaced by useQueries hook below
@@ -79,15 +80,15 @@ function App() {
   };
 
   return (
-    data && (
+    ingredientsList && (
       <div className="App">
-        {data &&
+        {ingredientsList &&
           dropdowns.map((dropdown) => (
             <IngredientDropdown
               key={dropdown.id}
               id={dropdown.id}
               updateDropdownValue={updateDropdownValue}
-              ingredients={data}
+              ingredients={ingredientsList}
             />
           ))}
         {dropdowns[0].value && (
