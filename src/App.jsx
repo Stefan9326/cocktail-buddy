@@ -98,7 +98,7 @@ function App() {
             </button>
           </>
         )}
-        {results && results.length > 0 && (
+        {results.length > 0 && (
           <>
             <ResultsContainer
               results={results}
