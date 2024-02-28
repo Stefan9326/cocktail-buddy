@@ -19,25 +19,17 @@ const ResultsContainer = ({ results, resultsLimit, dropdowns }) => {
       });
     });
     // Obtain an array of drinks' names that are common to all results
-    commonDrinks = Object.keys(drinksCount).filter(
-      (drink) => drinksCount[drink] === results.length
-    );
-    console.log(
-      results[0].filter((drink) => commonDrinks.includes(drink.strDrink))
-    );
+    commonDrinks = Object.keys(drinksCount).filter((drink) => drinksCount[drink] === results.length);
+    console.log(results[0].filter((drink) => commonDrinks.includes(drink.strDrink)));
     // Return an array of drinks objects that are common to all results
     if (commonDrinks.length) {
-      drinksToDisplay = results[0].filter((drink) =>
-        commonDrinks.includes(drink.strDrink)
-      );
+      drinksToDisplay = results[0].filter((drink) => commonDrinks.includes(drink.strDrink));
     } else {
       noExactResults = true;
       drinksToDisplay = Object.entries(drinksCount)
         .sort((a, b) => b[1] - a[1])
         .map((drinkCount) => {
-          return results
-            .flat()
-            .find((drink) => drink.strDrink === drinkCount[0]);
+          return results.flat().find((drink) => drink.strDrink === drinkCount[0]);
         });
     }
   }
@@ -48,12 +40,7 @@ const ResultsContainer = ({ results, resultsLimit, dropdowns }) => {
       {results.length ? (
         drinksToDisplay.slice(0, resultsLimit).map((result) => {
           return (
-            <ResultTile
-              key={result.idDrink}
-              result={result}
-              noExactResults={noExactResults}
-              dropdowns={dropdowns}
-            />
+            <ResultTile key={result.idDrink} result={result} noExactResults={noExactResults} dropdowns={dropdowns} />
           );
         })
       ) : (
