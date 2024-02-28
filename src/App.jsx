@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQueries } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
-import Axios from "axios";
+import { useFetchResults } from "./hooks/useFetchResults";
 import IngredientDropdown from "./components/IngredientDropdown/IngredientDropdown";
 import ResultsContainer from "./components/ResultsContainer/ResultsContainer";
 import "./App.css";
@@ -10,26 +10,8 @@ import { useFetchIngredients } from "./hooks/useFetchIngredients";
 function App() {
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
   const [dropdowns, setDropdowns] = useState([{ id: uuidv4(), value: "" }]);
+  const { results, resultsSuccess } = useFetchResults(dropdowns);
   const { ingredientsList } = useFetchIngredients();
-
-  // Fetch ingredients list
-
-  const queryResults = useQueries({
-    queries: dropdowns
-      .filter((dropdown) => dropdown.value)
-      .map((ingredient) => {
-        return {
-          queryKey: ["results", ingredient],
-          queryFn: () => {
-            return Axios.get(
-              `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient.value}`
-            );
-          },
-          enabled: !!ingredient.value,
-        };
-      }),
-  });
-  const resultsSuccess = queryResults.every((result) => result.isSuccess);
 
   const addIngredient = () => {
     setDropdowns([...dropdowns, { id: uuidv4(), value: "" }]);
@@ -68,10 +50,10 @@ function App() {
           </button>
         </>
       )}
-      {queryResults.length > 0 && resultsSuccess && (
+      {results.length > 0 && resultsSuccess && (
         <>
           <ResultsContainer
-            results={queryResults.map((result) => result.data.data.drinks)}
+            results={results.map((result) => result.data)}
             resultsLimit={resultsDisplayLimit}
             dropdowns={dropdowns}
           />
