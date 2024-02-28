@@ -9,15 +9,11 @@ const ResultsContainer = ({ results, resultsLimit, dropdowns }) => {
   return (
     <div className="results-container">
       {noExactResults && <p>No exact results found</p>}
-      {results.length ? (
-        drinksToDisplay.slice(0, resultsLimit).map((result) => {
-          return (
-            <ResultTile key={result.idDrink} result={result} noExactResults={noExactResults} dropdowns={dropdowns} />
-          );
-        })
-      ) : (
-        <p>No results found</p>
-      )}
+      {drinksToDisplay.slice(0, resultsLimit).map((result) => {
+        return (
+          <ResultTile key={result.idDrink} result={result} noExactResults={noExactResults} dropdowns={dropdowns} />
+        );
+      })}
     </div>
   );
 };
