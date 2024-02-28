@@ -11,12 +11,13 @@ export const fetchIngredientsList = async () => {
   }
 };
 
-export const fetchCocktailById = async (result) => {
+export const fetchCocktailById = async (id) => {
   try {
     const response = await Axios.get(
-      `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${result.idDrink}`
+      `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
     );
     // setCocktailInfo(response.data.drinks[0]);
+    console.log(response);
     return response.data.drinks[0];
   } catch (error) {
     console.error(error);
