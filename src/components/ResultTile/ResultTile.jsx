@@ -1,35 +1,16 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchCocktailById } from "../../api";
+import { memo } from "react";
+import { useCocktailInfo } from "../../hooks/useCocktailInfo";
 import PropTypes from "prop-types";
 import "./ResultTile.css";
 
-const ResultTile = ({ result, noExactResults, dropdowns }) => {
+export const ResultTile = memo(function ResultTile({ result, noExactResults, dropdowns }) {
   const [recipeDisplayed, setRecipeDisplayed] = useState(false);
-  let ingredients = [];
-  let matchedIngredients = [];
+  const { cocktailInfo, isSuccess, ingredients, matchedIngredients } = useCocktailInfo(result, dropdowns);
 
   const toggleRecipeDisplay = () => {
     setRecipeDisplayed(!recipeDisplayed);
   };
-
-  const { data: cocktailInfo, isSuccess } = useQuery({
-    queryKey: ["ingredients", result.idDrink],
-    queryFn: () => fetchCocktailById(result.idDrink),
-    staleTime: Infinity,
-    cacheTime: Infinity,
-  });
-
-  if (isSuccess) {
-    ingredients = Object.keys(cocktailInfo)
-      .filter((key) => key.startsWith("strIngredient") && cocktailInfo[key])
-      .map((key) => cocktailInfo[key])
-      .map((ingredient) => ingredient[0] + ingredient.slice(1).toLowerCase());
-
-    matchedIngredients = dropdowns
-      .map((dropdown) => dropdown.value[0] + dropdown.value.slice(1).toLowerCase())
-      .filter((value) => ingredients.includes(value));
-  }
 
   return (
     <div className="result-tile">
@@ -45,7 +26,7 @@ const ResultTile = ({ result, noExactResults, dropdowns }) => {
       <div className="right">
         <img src={result.strDrinkThumb} alt={`Photo of ${result.strDrink}`} />
         <button onClick={toggleRecipeDisplay}>Show recipe</button>
-        {recipeDisplayed && (
+        {recipeDisplayed && isSuccess && (
           <div>
             <ul>
               {ingredients.map((ingredient, index) =>
@@ -57,18 +38,16 @@ const ResultTile = ({ result, noExactResults, dropdowns }) => {
                 ) : null
               )}
             </ul>
-            <p>{isSuccess && cocktailInfo["strInstructions"]}</p>
+            <p>{cocktailInfo["strInstructions"]}</p>
           </div>
         )}
       </div>
     </div>
   );
-};
+});
 
 ResultTile.propTypes = {
   result: PropTypes.object.isRequired,
   noExactResults: PropTypes.bool.isRequired,
   dropdowns: PropTypes.array.isRequired,
 };
-
-export default ResultTile;

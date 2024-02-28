@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFetchResults } from "./hooks/useFetchResults";
 import { useDropdowns } from "./hooks/useDropdowns";
-import IngredientDropdown from "./components/IngredientDropdown/IngredientDropdown";
+import { IngredientDropdown } from "./components/IngredientDropdown/IngredientDropdown";
 import ResultsContainer from "./components/ResultsContainer/ResultsContainer";
 import "./App.css";
 import { useFetchIngredients } from "./hooks/useFetchIngredients";
