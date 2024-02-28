@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueries } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
 import { fetchIngredientsList } from "./api";
@@ -8,7 +8,6 @@ import ResultsContainer from "./components/ResultsContainer/ResultsContainer";
 import "./App.css";
 
 function App() {
-  const [results, setResults] = useState([]);
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
   const [dropdowns, setDropdowns] = useState([{ id: uuidv4(), value: "" }]);
 
@@ -20,45 +19,32 @@ function App() {
     cacheTime: Infinity,
   });
 
-  // This will be replaced by useQueries hook below
-  const fetchResults = async () => {
-    try {
-      const responses = await Promise.all(
-        dropdowns
-          .filter((dropdown) => dropdown.value)
-          .map((dropdown) => {
+  const queryResults = useQueries({
+    queries: dropdowns
+      .filter((dropdown) => dropdown.value)
+      .map((ingredient) => {
+        return {
+          queryKey: ["results", ingredient],
+          queryFn: () => {
             return Axios.get(
-              `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${dropdown.value}`
+              `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient.value}`
             );
-          })
-      );
-      console.log(responses);
-      setResults(responses.map((result) => result.data.drinks));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+          },
+          enabled: !!ingredient.value,
+        };
+      }),
+  });
+  queryResults.forEach((result) => {
+    if (result.isSuccess) console.log(result.data.data);
+  });
 
-  // This needs to be finished. It first fetches results based on ingredients selected.
-  // I think this needs to be moved into the handleSearchClick function so that it only executes onClick.
-  // const queryResults = useQueries({
-  //   queries: Object.values(dropdownValues).map((ingredient) => {
-  //     return {
-  //       queryKey: ["results", ingredient],
-  //       queryFn: () => {
-  //         return Axios.get(
-  //           `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`
-  //         );
-  //       },
-  //     };
-  //   }),
-  // });
+  const resultsSuccess = queryResults.every((result) => result.isSuccess);
 
-  const handleSearchClick = () => {
-    console.log(dropdowns);
-    setResultsDisplayLimit(10);
-    fetchResults();
-  };
+  // const handleSearchClick = () => {
+  //   console.log(dropdowns);
+  //   setResultsDisplayLimit(10);
+  //   fetchResults();
+  // };
 
   const addIngredient = () => {
     setDropdowns([...dropdowns, { id: uuidv4(), value: "" }]);
@@ -96,15 +82,12 @@ function App() {
             <button id="add-ingr-btn" onClick={addIngredient}>
               Add ingredient
             </button>
-            <button id="search-btn" onClick={handleSearchClick}>
-              Search
-            </button>
           </>
         )}
-        {results.length > 0 && (
+        {queryResults.length > 0 && resultsSuccess && (
           <>
             <ResultsContainer
-              results={results}
+              results={queryResults.map((result) => result.data.data.drinks)}
               resultsLimit={resultsDisplayLimit}
               dropdowns={dropdowns}
             />

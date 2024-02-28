@@ -6,30 +6,32 @@ import "./ResultTile.css";
 
 const ResultTile = ({ result, noExactResults, dropdowns }) => {
   const [recipeDisplayed, setRecipeDisplayed] = useState(false);
+  let ingredients = [];
+  let matchedIngredients = [];
 
   const toggleRecipeDisplay = () => {
     setRecipeDisplayed(!recipeDisplayed);
   };
 
-  const { data: cocktailInfo } = useQuery({
+  const { data: cocktailInfo, isSuccess } = useQuery({
     queryKey: ["ingredients", result.idDrink],
-    queryFn: fetchCocktailById(result),
+    queryFn: () => fetchCocktailById(result.idDrink),
     staleTime: Infinity,
     cacheTime: Infinity,
   });
 
-  const ingredients = Object.keys(cocktailInfo ?? {})
-    .filter((key) => key.startsWith("strIngredient") && cocktailInfo[key])
-    .map((key) => cocktailInfo[key])
-    .map((ingredient) => ingredient[0] + ingredient.slice(1).toLowerCase());
+  if (isSuccess) {
+    ingredients = Object.keys(cocktailInfo)
+      .filter((key) => key.startsWith("strIngredient") && cocktailInfo[key])
+      .map((key) => cocktailInfo[key])
+      .map((ingredient) => ingredient[0] + ingredient.slice(1).toLowerCase());
 
-  console.log(ingredients);
-
-  const matchedIngredients = dropdowns
-    .map(
-      (dropdown) => dropdown.value[0] + dropdown.value.slice(1).toLowerCase()
-    )
-    .filter((value) => ingredients.includes(value));
+    matchedIngredients = dropdowns
+      .map(
+        (dropdown) => dropdown.value[0] + dropdown.value.slice(1).toLowerCase()
+      )
+      .filter((value) => ingredients.includes(value));
+  }
 
   return (
     <div className="result-tile">
@@ -57,7 +59,7 @@ const ResultTile = ({ result, noExactResults, dropdowns }) => {
                 ) : null
               )}
             </ul>
-            <p>{cocktailInfo["strInstructions"]}</p>
+            <p>{isSuccess && cocktailInfo["strInstructions"]}</p>
           </div>
         )}
       </div>
