@@ -14,34 +14,36 @@ export const ResultTile = memo(function ResultTile({ result, noExactResults, dro
 
   return (
     <div className="result-tile">
-      {result.strDrink}
-      {noExactResults && (
-        <p>
-          Matched ingredients:{" "}
-          <em>
-            <strong>{matchedIngredients.join(", ")}</strong>
-          </em>
-        </p>
-      )}
-      <div className="right">
-        <img src={result.strDrinkThumb} alt={`Photo of ${result.strDrink}`} />
-        <button onClick={toggleRecipeDisplay}>Show recipe</button>
-        {recipeDisplayed && isSuccess && (
-          <div>
-            <ul>
-              {ingredients.map((ingredient, index) =>
-                ingredient ? (
-                  <li key={ingredient + index}>
-                    {ingredient}
-                    {cocktailInfo[`strMeasure${index + 1}`]}
-                  </li>
-                ) : null
-              )}
-            </ul>
-            <p>{cocktailInfo["strInstructions"]}</p>
-          </div>
+      <div className="initial-info">
+        {result.strDrink}
+        {noExactResults && (
+          <p>
+            Matched ingredients:{" "}
+            <em>
+              <strong>{matchedIngredients.join(", ")}</strong>
+            </em>
+          </p>
         )}
+        <div className="right">
+          <img src={result.strDrinkThumb} alt={`Photo of ${result.strDrink}`} />
+          <button onClick={toggleRecipeDisplay}>Show recipe</button>
+        </div>
       </div>
+      {recipeDisplayed && isSuccess && (
+        <div>
+          <ul>
+            {ingredients.map((ingredient, index) =>
+              ingredient ? (
+                <li key={ingredient + index}>
+                  {ingredient}
+                  {cocktailInfo[`strMeasure${index + 1}`]}
+                </li>
+              ) : null
+            )}
+          </ul>
+          <p>{cocktailInfo["strInstructions"]}</p>
+        </div>
+      )}
     </div>
   );
 });

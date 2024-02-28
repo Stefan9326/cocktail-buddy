@@ -18,6 +18,7 @@ function App() {
 
   return (
     <div className="App">
+      <img src="src/assets/3-cropped.webp" alt="" width="460px" />
       {ingredientsList &&
         dropdowns.map((dropdown) => (
           <IngredientDropdown
