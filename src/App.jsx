@@ -1,23 +1,18 @@
 import { useState } from "react";
-import { useQuery, useQueries } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 import Axios from "axios";
-import { fetchIngredientsList } from "./api";
-import IngredientDropdown from "./components/SearchBar/IngredientDropdown";
+import IngredientDropdown from "./components/IngredientDropdown/IngredientDropdown";
 import ResultsContainer from "./components/ResultsContainer/ResultsContainer";
 import "./App.css";
+import { useFetchIngredients } from "./hooks/useFetchIngredients";
 
 function App() {
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
   const [dropdowns, setDropdowns] = useState([{ id: uuidv4(), value: "" }]);
+  const { ingredientsList } = useFetchIngredients();
 
   // Fetch ingredients list
-  const { data: ingredientsList } = useQuery({
-    queryKey: ["ingredients"],
-    queryFn: fetchIngredientsList,
-    staleTime: Infinity,
-    cacheTime: Infinity,
-  });
 
   const queryResults = useQueries({
     queries: dropdowns
@@ -34,17 +29,7 @@ function App() {
         };
       }),
   });
-  queryResults.forEach((result) => {
-    if (result.isSuccess) console.log(result.data.data);
-  });
-
   const resultsSuccess = queryResults.every((result) => result.isSuccess);
-
-  // const handleSearchClick = () => {
-  //   console.log(dropdowns);
-  //   setResultsDisplayLimit(10);
-  //   fetchResults();
-  // };
 
   const addIngredient = () => {
     setDropdowns([...dropdowns, { id: uuidv4(), value: "" }]);
@@ -66,36 +51,34 @@ function App() {
   };
 
   return (
-    ingredientsList && (
-      <div className="App">
-        {ingredientsList &&
-          dropdowns.map((dropdown) => (
-            <IngredientDropdown
-              key={dropdown.id}
-              id={dropdown.id}
-              updateDropdownValue={updateDropdownValue}
-              ingredients={ingredientsList}
-            />
-          ))}
-        {dropdowns[0].value && (
-          <>
-            <button id="add-ingr-btn" onClick={addIngredient}>
-              Add ingredient
-            </button>
-          </>
-        )}
-        {queryResults.length > 0 && resultsSuccess && (
-          <>
-            <ResultsContainer
-              results={queryResults.map((result) => result.data.data.drinks)}
-              resultsLimit={resultsDisplayLimit}
-              dropdowns={dropdowns}
-            />
-            <button onClick={showMoreResults}>Show more</button>
-          </>
-        )}
-      </div>
-    )
+    <div className="App">
+      {ingredientsList &&
+        dropdowns.map((dropdown) => (
+          <IngredientDropdown
+            key={dropdown.id}
+            id={dropdown.id}
+            updateDropdownValue={updateDropdownValue}
+            ingredients={ingredientsList}
+          />
+        ))}
+      {dropdowns[0].value && (
+        <>
+          <button id="add-ingr-btn" onClick={addIngredient}>
+            Add ingredient
+          </button>
+        </>
+      )}
+      {queryResults.length > 0 && resultsSuccess && (
+        <>
+          <ResultsContainer
+            results={queryResults.map((result) => result.data.data.drinks)}
+            resultsLimit={resultsDisplayLimit}
+            dropdowns={dropdowns}
+          />
+          <button onClick={showMoreResults}>Show more</button>
+        </>
+      )}
+    </div>
   );
 }
 
