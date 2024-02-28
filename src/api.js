@@ -16,7 +16,6 @@ export const fetchCocktailById = async (id) => {
     const response = await Axios.get(
       `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
     );
-    // setCocktailInfo(response.data.drinks[0]);
     console.log(response);
     return response.data.drinks[0];
   } catch (error) {
