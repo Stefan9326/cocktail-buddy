@@ -27,9 +27,7 @@ const ResultTile = ({ result, noExactResults, dropdowns }) => {
       .map((ingredient) => ingredient[0] + ingredient.slice(1).toLowerCase());
 
     matchedIngredients = dropdowns
-      .map(
-        (dropdown) => dropdown.value[0] + dropdown.value.slice(1).toLowerCase()
-      )
+      .map((dropdown) => dropdown.value[0] + dropdown.value.slice(1).toLowerCase())
       .filter((value) => ingredients.includes(value));
   }
 

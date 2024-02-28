@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useQueries } from "@tanstack/react-query";
-import { v4 as uuidv4 } from "uuid";
 import { useFetchResults } from "./hooks/useFetchResults";
+import { useDropdowns } from "./hooks/useDropdowns";
 import IngredientDropdown from "./components/IngredientDropdown/IngredientDropdown";
 import ResultsContainer from "./components/ResultsContainer/ResultsContainer";
 import "./App.css";
@@ -9,24 +8,9 @@ import { useFetchIngredients } from "./hooks/useFetchIngredients";
 
 function App() {
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
-  const [dropdowns, setDropdowns] = useState([{ id: uuidv4(), value: "" }]);
+  const { dropdowns, addIngredient, updateDropdownValue } = useDropdowns();
   const { results, resultsSuccess } = useFetchResults(dropdowns);
   const { ingredientsList } = useFetchIngredients();
-
-  const addIngredient = () => {
-    setDropdowns([...dropdowns, { id: uuidv4(), value: "" }]);
-  };
-
-  const updateDropdownValue = (id, value) => {
-    setDropdowns(
-      dropdowns.map((dropdown) => {
-        if (dropdown.id === id) {
-          return { ...dropdown, value };
-        }
-        return dropdown;
-      })
-    );
-  };
 
   const showMoreResults = () => {
     setResultsDisplayLimit(resultsDisplayLimit + 10);
