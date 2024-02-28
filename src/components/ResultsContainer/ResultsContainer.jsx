@@ -1,6 +1,6 @@
 import { useDrinksToDisplay } from "../../hooks/useDrinksToDisplay";
 import PropTypes from "prop-types";
-import ResultTile from "../ResultTile/ResultTile";
+import { ResultTile } from "../ResultTile/ResultTile";
 import "./ResultsContainer.css";
 
 const ResultsContainer = ({ results, resultsLimit, dropdowns }) => {

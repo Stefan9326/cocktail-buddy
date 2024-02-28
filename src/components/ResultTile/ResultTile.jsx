@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { memo } from "react";
 import { fetchCocktailById } from "../../api";
 import PropTypes from "prop-types";
 import "./ResultTile.css";
 
-const ResultTile = ({ result, noExactResults, dropdowns }) => {
+export const ResultTile = memo(function ResultTile({ result, noExactResults, dropdowns }) {
   const [recipeDisplayed, setRecipeDisplayed] = useState(false);
   let ingredients = [];
   let matchedIngredients = [];
@@ -63,12 +64,10 @@ const ResultTile = ({ result, noExactResults, dropdowns }) => {
       </div>
     </div>
   );
-};
+});
 
 ResultTile.propTypes = {
   result: PropTypes.object.isRequired,
   noExactResults: PropTypes.bool.isRequired,
   dropdowns: PropTypes.array.isRequired,
 };
-
-export default ResultTile;
