@@ -45,7 +45,7 @@ const ResultTile = ({ result, noExactResults, dropdowns }) => {
       <div className="right">
         <img src={result.strDrinkThumb} alt={`Photo of ${result.strDrink}`} />
         <button onClick={toggleRecipeDisplay}>Show recipe</button>
-        {recipeDisplayed && (
+        {recipeDisplayed && isSuccess && (
           <div>
             <ul>
               {ingredients.map((ingredient, index) =>
@@ -57,7 +57,7 @@ const ResultTile = ({ result, noExactResults, dropdowns }) => {
                 ) : null
               )}
             </ul>
-            <p>{isSuccess && cocktailInfo["strInstructions"]}</p>
+            <p>{cocktailInfo["strInstructions"]}</p>
           </div>
         )}
       </div>
