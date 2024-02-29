@@ -3,7 +3,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import "./IngredientDropdown.css";
 
-export const IngredientDropdown = memo(function IngredientDropdown({ id, ingredients, updateDropdownValue }) {
+const IngredientDropdown = memo(function IngredientDropdown({ id, ingredients, updateDropdownValue }) {
   const [dropdownValue, setDropdownValue] = useState("");
 
   const handleChange = (event) => {
@@ -36,3 +36,5 @@ IngredientDropdown.propTypes = {
   ingredients: PropTypes.array.isRequired,
   updateDropdownValue: PropTypes.func.isRequired,
 };
+
+export default IngredientDropdown;

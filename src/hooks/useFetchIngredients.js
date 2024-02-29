@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchIngredientsList } from "../api";
 
-export const useFetchIngredients = () => {
+const useFetchIngredients = () => {
   const { data: ingredientsList } = useQuery({
     queryKey: ["ingredients"],
     queryFn: fetchIngredientsList,
@@ -11,3 +11,5 @@ export const useFetchIngredients = () => {
 
   return { ingredientsList };
 };
+
+export default useFetchIngredients;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { memo } from "react";
-import { useCocktailInfo } from "../../hooks/useCocktailInfo";
+import useCocktailInfo from "../../hooks/useCocktailInfo";
 import PropTypes from "prop-types";
 import "./ResultTile.css";
 

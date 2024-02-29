@@ -1,4 +1,4 @@
-export const useDrinksToDisplay = (results) => {
+const useDrinksToDisplay = (results) => {
   const drinksCount = {};
   let commonDrinks = [];
   let drinksToDisplay = results[0];
@@ -32,3 +32,5 @@ export const useDrinksToDisplay = (results) => {
 
   return { drinksToDisplay, noExactResults };
 };
+
+export default useDrinksToDisplay;
