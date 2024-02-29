@@ -4,7 +4,6 @@ import useDropdowns from "../hooks/useDropdowns";
 import useFetchIngredients from "../hooks/useFetchIngredients";
 import IngredientDropdown from "../components/IngredientDropdown/IngredientDropdown";
 import ResultsContainer from "../components/ResultsContainer/ResultsContainer";
-import "../App.css";
 
 const IngredientSearch = () => {
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
@@ -17,8 +16,7 @@ const IngredientSearch = () => {
   };
 
   return (
-    <div className="App">
-      <img src="src/assets/3-cropped.webp" alt="" width="460px" />
+    <div>
       {ingredientsList &&
         dropdowns.map((dropdown) => (
           <IngredientDropdown
