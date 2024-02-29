@@ -1,13 +1,11 @@
 import React from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 
-const router = createBrowserRouter(<Route path="/" element="" />);
-
+// I'm thinking this should all be moved into App
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -16,6 +14,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <App />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-    <RouterProvider router={router} />
   </React.StrictMode>
 );
