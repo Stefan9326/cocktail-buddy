@@ -3,6 +3,7 @@ import Root from "./routes/Root";
 import Home from "./routes/Home";
 import NameSearch from "./routes/NameSearch";
 import IngredientSearch from "./routes/IngredientSearch";
+import "./App.css";
 
 const router = createBrowserRouter([
   {
