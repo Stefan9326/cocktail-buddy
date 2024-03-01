@@ -1,4 +1,4 @@
-import { useDrinksToDisplay } from "../../hooks/useDrinksToDisplay";
+import useDrinksToDisplay from "../../hooks/useDrinksToDisplay";
 import PropTypes from "prop-types";
 import { ResultTile } from "../ResultTile/ResultTile";
 import "./ResultsContainer.css";

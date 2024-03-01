@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchCocktailById } from "../api";
 
-export const useCocktailInfo = (result, dropdowns) => {
+const useCocktailInfo = (result, dropdowns) => {
   let ingredients = [];
   let matchedIngredients = [];
 
@@ -25,3 +25,5 @@ export const useCocktailInfo = (result, dropdowns) => {
 
   return { cocktailInfo, isSuccess, ingredients, matchedIngredients };
 };
+
+export default useCocktailInfo;

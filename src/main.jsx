@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 
+// I'm thinking this should all be moved into App
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(

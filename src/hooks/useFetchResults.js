@@ -1,7 +1,7 @@
 import { fetchResultsByIngredient } from "../api";
 import { useQueries } from "@tanstack/react-query";
 
-export const useFetchResults = (dropdowns) => {
+const useFetchResults = (dropdowns) => {
   const results = useQueries({
     queries: dropdowns
       .filter((dropdown) => dropdown.value)
@@ -19,3 +19,5 @@ export const useFetchResults = (dropdowns) => {
 
   return { results, resultsSuccess };
 };
+
+export default useFetchResults;

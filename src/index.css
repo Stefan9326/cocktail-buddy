@@ -30,15 +30,6 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #c9c9c9;
-  cursor: pointer;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
