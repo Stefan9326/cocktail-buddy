@@ -1,4 +1,4 @@
-import { fetchResultsByIngredient } from "../api";
+import { fetchCocktailsByIngredient } from "../api";
 import { useQueries } from "@tanstack/react-query";
 
 const useFetchResults = (dropdowns) => {
@@ -8,7 +8,7 @@ const useFetchResults = (dropdowns) => {
       .map((ingredient) => {
         return {
           queryKey: ["results", ingredient],
-          queryFn: () => fetchResultsByIngredient(ingredient),
+          queryFn: () => fetchCocktailsByIngredient(ingredient),
           staleTime: Infinity,
           cacheTime: Infinity,
           enabled: !!ingredient.value,

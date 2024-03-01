@@ -9,7 +9,7 @@ export const fetchIngredientsList = async () => {
   }
 };
 
-export const fetchResultsByIngredient = async (ingredient) => {
+export const fetchCocktailsByIngredient = async (ingredient) => {
   const response = await Axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient.value}`);
   return response.data.drinks;
 };
