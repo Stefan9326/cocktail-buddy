@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { memo } from "react";
-import useCocktailInfo from "../../hooks/useCocktailInfo";
+import useFetchCocktailInfo from "../../hooks/useFetchCocktailInfo";
 import PropTypes from "prop-types";
 import "./ResultTile.css";
 
 export const ResultTile = memo(function ResultTile({ result, noExactResults, dropdowns }) {
   const [recipeDisplayed, setRecipeDisplayed] = useState(false);
-  const { cocktailInfo, isSuccess, ingredients, matchedIngredients } = useCocktailInfo(result, dropdowns);
+  const { cocktailInfo, isSuccess, ingredients, matchedIngredients } = useFetchCocktailInfo(result, dropdowns);
 
   const toggleRecipeDisplay = () => {
     setRecipeDisplayed(!recipeDisplayed);
@@ -32,14 +32,14 @@ export const ResultTile = memo(function ResultTile({ result, noExactResults, dro
       {recipeDisplayed && isSuccess && (
         <div>
           <ul>
-            {ingredients.map((ingredient, index) =>
-              ingredient ? (
+            {ingredients.map((ingredient, index) => {
+              return (
                 <li key={ingredient + index}>
                   {ingredient}
                   {cocktailInfo[`strMeasure${index + 1}`]}
                 </li>
-              ) : null
-            )}
+              );
+            })}
           </ul>
           <p>{cocktailInfo["strInstructions"]}</p>
         </div>
