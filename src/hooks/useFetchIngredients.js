@@ -9,7 +9,7 @@ const useFetchIngredients = () => {
     cacheTime: Infinity,
   });
 
-  return { ingredientsList };
+  return ingredientsList;
 };
 
 export default useFetchIngredients;
