@@ -1,10 +1,10 @@
-import useDrinksToDisplay from "../../hooks/useDrinksToDisplay";
+import getDrinksToDisplay from "../../utils/getDrinksToDisplay";
 import PropTypes from "prop-types";
 import { ResultTile } from "../ResultTile/ResultTile";
 import "./ResultsContainer.css";
 
 const ResultsContainer = ({ results, resultsLimit, dropdowns }) => {
-  const { drinksToDisplay, noExactResults } = useDrinksToDisplay(results);
+  const { drinksToDisplay, noExactResults } = getDrinksToDisplay(results);
 
   return (
     <div className="results-container">
