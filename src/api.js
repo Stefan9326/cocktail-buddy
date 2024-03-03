@@ -22,3 +22,12 @@ export const fetchCocktailById = async (id) => {
     throw error(error);
   }
 };
+
+export const fetchCocktailsByName = async (name) => {
+  try {
+    const response = await Axios.get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`);
+    return response.data.drinks;
+  } catch (error) {
+    throw error(error);
+  }
+};
