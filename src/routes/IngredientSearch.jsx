@@ -3,13 +3,13 @@ import useFetchResults from "../hooks/useFetchResults";
 import useDropdowns from "../hooks/useDropdowns";
 import useFetchIngredients from "../hooks/useFetchIngredients";
 import IngredientDropdown from "../components/IngredientDropdown/IngredientDropdown";
-import ResultsContainer from "../components/ResultsContainer/ResultsContainer";
+import IngredientSearchResults from "../components/IngredientSearchResults/IngredientSearchResults";
 
 const IngredientSearch = () => {
-  const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
+  const ingredientsList = useFetchIngredients();
   const { dropdowns, addIngredient, updateDropdownValue } = useDropdowns();
   const { results, resultsSuccess } = useFetchResults(dropdowns);
-  const { ingredientsList } = useFetchIngredients();
+  const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
 
   const showMoreResults = () => {
     setResultsDisplayLimit(resultsDisplayLimit + 10);
@@ -35,7 +35,7 @@ const IngredientSearch = () => {
       )}
       {results.length > 0 && resultsSuccess && (
         <>
-          <ResultsContainer
+          <IngredientSearchResults
             results={results.map((result) => result.data)}
             resultsLimit={resultsDisplayLimit}
             dropdowns={dropdowns}

@@ -1,9 +1,9 @@
 import getDrinksToDisplay from "../../utils/getDrinksToDisplay";
 import PropTypes from "prop-types";
 import { ResultTile } from "../ResultTile/ResultTile";
-import "./ResultsContainer.css";
+import "./IngredientSearchResults.css";
 
-const ResultsContainer = ({ results, resultsLimit, dropdowns }) => {
+const IngredientSearchResults = ({ results, resultsLimit, dropdowns }) => {
   const { drinksToDisplay, noExactResults } = getDrinksToDisplay(results);
 
   return (
@@ -18,10 +18,10 @@ const ResultsContainer = ({ results, resultsLimit, dropdowns }) => {
   );
 };
 
-ResultsContainer.propTypes = {
+IngredientSearchResults.propTypes = {
   dropdowns: PropTypes.array.isRequired,
   results: PropTypes.array.isRequired,
   resultsLimit: PropTypes.number.isRequired,
 };
 
-export default ResultsContainer;
+export default IngredientSearchResults;
