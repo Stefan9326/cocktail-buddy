@@ -1,9 +1,11 @@
 import { PropTypes } from "prop-types";
-import { fetchCocktailsByName } from "../../utils/api";
+import { fetchData } from "../../utils/api";
 import useFetchData from "../../hooks/useFetchData";
 
+const baseUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
+
 const NameSearchResults = ({ userInput }) => {
-  const { isSuccess, results } = useFetchData(["cocktails", userInput], () => fetchCocktailsByName(userInput));
+  const { isSuccess, results } = useFetchData(["cocktails", userInput], () => fetchData(baseUrl, userInput));
 
   if (!isSuccess) {
     return <p>Loading...</p>;

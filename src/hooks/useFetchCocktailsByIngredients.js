@@ -1,17 +1,19 @@
-import { fetchCocktailsByIngredient } from "../utils/api";
+import { fetchData } from "../utils/api";
 import { useQueries } from "@tanstack/react-query";
+
+const baseUrl = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=";
 
 const useFetchCocktailsByIngredients = (dropdowns) => {
   const results = useQueries({
     queries: dropdowns
       .filter((dropdown) => dropdown.value)
-      .map((ingredient) => {
+      .map((dropdown) => {
         return {
-          queryKey: ["results", ingredient],
-          queryFn: () => fetchCocktailsByIngredient(ingredient),
+          queryKey: ["results", dropdown],
+          queryFn: () => fetchData(baseUrl, dropdown.value),
           staleTime: Infinity,
           cacheTime: Infinity,
-          enabled: !!ingredient.value,
+          enabled: !!dropdown.value,
         };
       }),
   });

@@ -1,32 +1,14 @@
 import Axios from "axios";
 
-export const fetchIngredientsList = async () => {
+export const fetchData = async (url, dynamicValue = "") => {
   try {
-    const response = await Axios.get("https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list");
-    return response.data.drinks;
-  } catch (error) {
-    throw error(error);
-  }
-};
-
-export const fetchCocktailsByIngredient = async (ingredient) => {
-  const response = await Axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient.value}`);
-  return response.data.drinks;
-};
-
-export const fetchCocktailById = async (id) => {
-  try {
-    const response = await Axios.get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
-    return response.data.drinks[0];
-  } catch (error) {
-    throw error(error);
-  }
-};
-
-export const fetchCocktailsByName = async (name) => {
-  try {
-    const response = await Axios.get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`);
-    return response.data.drinks;
+    const response = await Axios.get(url + dynamicValue);
+    // Structure of the response is different for the lookup (search for cocktail by Id) endpoint
+    if (url.includes("lookup")) {
+      return response.data.drinks[0];
+    } else {
+      return response.data.drinks;
+    }
   } catch (error) {
     throw error(error);
   }
