@@ -1,5 +1,6 @@
 import useFetchData from "./useFetchData";
 import { fetchData } from "../utils/api";
+import getCocktailIngredients from "../utils/getCocktailIngredients";
 
 const baseUrl = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
 
@@ -12,10 +13,7 @@ const useFetchCocktailInfo = (result, dropdowns) => {
   );
 
   if (isSuccess) {
-    ingredients = Object.keys(cocktailInfo)
-      .filter((key) => key.startsWith("strIngredient") && cocktailInfo[key])
-      .map((key) => cocktailInfo[key])
-      .map((ingredient) => ingredient[0] + ingredient.slice(1).toLowerCase());
+    ingredients = getCocktailIngredients(cocktailInfo);
 
     matchedIngredients = dropdowns
       .map((dropdown) => dropdown.value[0] + dropdown.value.slice(1).toLowerCase())

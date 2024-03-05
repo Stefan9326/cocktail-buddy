@@ -1,6 +1,6 @@
 import getDrinksToDisplay from "../../utils/getDrinksToDisplay";
 import PropTypes from "prop-types";
-import { ResultTile } from "../NameSearchResultTile/NameSearchResultTile";
+import { IngredientSearchResultTile } from "../IngredientSearchResultTile/IngredientSearchResultTile";
 import "./IngredientSearchResults.css";
 
 const IngredientSearchResults = ({ results, resultsLimit, dropdowns }) => {
@@ -11,7 +11,12 @@ const IngredientSearchResults = ({ results, resultsLimit, dropdowns }) => {
       {noExactResults && <p>No exact results found</p>}
       {drinksToDisplay.slice(0, resultsLimit).map((result) => {
         return (
-          <ResultTile key={result.idDrink} result={result} noExactResults={noExactResults} dropdowns={dropdowns} />
+          <IngredientSearchResultTile
+            key={result.idDrink}
+            result={result}
+            noExactResults={noExactResults}
+            dropdowns={dropdowns}
+          />
         );
       })}
     </div>
