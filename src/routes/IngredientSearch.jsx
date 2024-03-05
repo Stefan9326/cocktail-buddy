@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useFetchResults from "../hooks/useFetchResults";
+import useFetchCocktailsByIngredients from "../hooks/useFetchCocktailsByIngredients";
 import useDropdowns from "../hooks/useDropdowns";
 import { fetchIngredientsList } from "../utils/api";
 import useFetchData from "../hooks/useFetchData";
@@ -9,7 +9,7 @@ import IngredientSearchResults from "../components/IngredientSearchResults/Ingre
 const IngredientSearch = () => {
   const { results: ingredientsList } = useFetchData(["ingredients"], fetchIngredientsList);
   const { dropdowns, addIngredient, updateDropdownValue } = useDropdowns();
-  const { results, resultsSuccess } = useFetchResults(dropdowns);
+  const { results, resultsSuccess } = useFetchCocktailsByIngredients(dropdowns);
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
 
   const showMoreResults = () => {
