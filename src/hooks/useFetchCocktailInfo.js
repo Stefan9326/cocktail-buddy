@@ -1,16 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import useFetchData from "./useFetchData";
 import { fetchCocktailById } from "../utils/api";
 
 const useFetchCocktailInfo = (result, dropdowns) => {
   let ingredients = [];
   let matchedIngredients = [];
 
-  const { data: cocktailInfo, isSuccess } = useQuery({
-    queryKey: ["ingredients", result.idDrink],
-    queryFn: () => fetchCocktailById(result.idDrink),
-    staleTime: Infinity,
-    cacheTime: Infinity,
-  });
+  const { isSuccess, results: cocktailInfo } = useFetchData(["ingredients", result.idDrink], () =>
+    fetchCocktailById(result.idDrink)
+  );
 
   if (isSuccess) {
     ingredients = Object.keys(cocktailInfo)

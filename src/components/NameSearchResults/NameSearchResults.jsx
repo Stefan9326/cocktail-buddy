@@ -1,8 +1,9 @@
 import { PropTypes } from "prop-types";
-import useFetchCocktailsByName from "../../hooks/useFetchCocktailsByName";
+import { fetchCocktailsByName } from "../../utils/api";
+import useFetchData from "../../hooks/useFetchData";
 
 const NameSearchResults = ({ userInput }) => {
-  const { isSuccess, results } = useFetchCocktailsByName(userInput);
+  const { isSuccess, results } = useFetchData(["cocktails", userInput], () => fetchCocktailsByName(userInput));
 
   if (!isSuccess) {
     return <p>Loading...</p>;
