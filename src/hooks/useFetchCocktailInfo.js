@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchCocktailById } from "../api";
+import { fetchCocktailById } from "../utils/api";
 
 const useFetchCocktailInfo = (result, dropdowns) => {
   let ingredients = [];

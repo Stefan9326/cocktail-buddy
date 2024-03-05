@@ -1,4 +1,4 @@
-import { fetchCocktailsByIngredient } from "../api";
+import { fetchCocktailsByIngredient } from "../utils/api";
 import { useQueries } from "@tanstack/react-query";
 
 const useFetchResults = (dropdowns) => {
