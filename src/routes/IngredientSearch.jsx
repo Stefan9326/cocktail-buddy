@@ -10,7 +10,7 @@ const url = "https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list";
 
 const IngredientSearch = () => {
   const { results: ingredientsList } = useFetchData(["ingredients"], () => fetchData(url));
-  const { dropdowns, addIngredient, updateDropdownValue } = useDropdowns();
+  const { dropdowns, addDropdown, updateDropdownValue, deleteDropdown } = useDropdowns();
   const { results, resultsSuccess } = useFetchCocktailsByIngredients(dropdowns);
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
 
@@ -22,16 +22,18 @@ const IngredientSearch = () => {
     <div>
       {ingredientsList &&
         dropdowns.map((dropdown) => (
-          <IngredientDropdown
-            key={dropdown.id}
-            id={dropdown.id}
-            updateDropdownValue={updateDropdownValue}
-            ingredients={ingredientsList}
-          />
+          <div key={dropdown.id}>
+            <IngredientDropdown
+              id={dropdown.id}
+              updateDropdownValue={updateDropdownValue}
+              ingredients={ingredientsList}
+            />
+            {dropdowns.length > 1 && <button onClick={() => deleteDropdown(dropdown.id)}>Delete</button>}
+          </div>
         ))}
       {dropdowns[0].value && (
         <>
-          <button id="add-ingr-btn" onClick={addIngredient}>
+          <button id="add-ingr-btn" onClick={addDropdown}>
             Add ingredient
           </button>
         </>

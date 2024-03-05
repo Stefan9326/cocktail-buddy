@@ -4,8 +4,12 @@ import { v4 as uuidv4 } from "uuid";
 const useDropdowns = () => {
   const [dropdowns, setDropdowns] = useState([{ id: uuidv4(), value: "" }]);
 
-  const addIngredient = () => {
+  const addDropdown = () => {
     setDropdowns([...dropdowns, { id: uuidv4(), value: "" }]);
+  };
+
+  const deleteDropdown = (id) => {
+    setDropdowns(dropdowns.filter((dropdown) => dropdown.id !== id));
   };
 
   const updateDropdownValue = (id, value) => {
@@ -19,7 +23,7 @@ const useDropdowns = () => {
     );
   };
 
-  return { dropdowns, addIngredient, updateDropdownValue };
+  return { dropdowns, addDropdown, deleteDropdown, updateDropdownValue };
 };
 
 export default useDropdowns;
