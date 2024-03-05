@@ -1,6 +1,7 @@
 import { PropTypes } from "prop-types";
 import { fetchData } from "../../utils/api";
 import useFetchData from "../../hooks/useFetchData";
+import { NameSearchResultTile } from "../NameSearchResultTile/NameSearchResultTile";
 
 const baseUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 
@@ -13,15 +14,7 @@ const NameSearchResults = ({ userInput }) => {
     <div className="results-container">
       {isSuccess &&
         (results ? (
-          results.map((result) => {
-            return (
-              // This will be ResultTile once I have refactored to allow it to be reusable in different contexts
-              <div key={result.idDrink}>
-                <h3>{result.strDrink}</h3>
-                <img src={result.strDrinkThumb} alt={`Photo of ${result.strDrink}`} />
-              </div>
-            );
-          })
+          results.map((result) => <NameSearchResultTile key={result.idDrink} result={result} />)
         ) : (
           <p>No results found</p>
         ))}

@@ -30,7 +30,7 @@ export const IngredientSearchResultTile = memo(function ResultTile({ result, noE
         </div>
       </div>
       {recipeDisplayed && isSuccess && (
-        <div>
+        <>
           <ul>
             {ingredients.map((ingredient, index) => {
               return (
@@ -42,7 +42,7 @@ export const IngredientSearchResultTile = memo(function ResultTile({ result, noE
             })}
           </ul>
           <p>{cocktailInfo["strInstructions"]}</p>
-        </div>
+        </>
       )}
     </div>
   );
