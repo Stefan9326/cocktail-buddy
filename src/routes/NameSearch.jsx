@@ -11,7 +11,7 @@ const NameSearch = () => {
   return (
     <>
       <input value={inputValue} onChange={handleChange} type="text" placeholder="Search for cocktails by name..." />
-      <NameSearchResults userInput={inputValue} />
+      {inputValue && <NameSearchResults userInput={inputValue} />}
     </>
   );
 };
