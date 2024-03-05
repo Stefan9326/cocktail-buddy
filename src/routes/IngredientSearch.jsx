@@ -1,14 +1,17 @@
 import { useState } from "react";
-import useFetchResults from "../hooks/useFetchResults";
+import useFetchCocktailsByIngredients from "../hooks/useFetchCocktailsByIngredients";
 import useDropdowns from "../hooks/useDropdowns";
-import useFetchIngredients from "../hooks/useFetchIngredients";
+import { fetchData } from "../utils/api";
+import useFetchData from "../hooks/useFetchData";
 import IngredientDropdown from "../components/IngredientDropdown/IngredientDropdown";
 import IngredientSearchResults from "../components/IngredientSearchResults/IngredientSearchResults";
 
+const url = "https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list";
+
 const IngredientSearch = () => {
-  const ingredientsList = useFetchIngredients();
+  const { results: ingredientsList } = useFetchData(["ingredients"], () => fetchData(url));
   const { dropdowns, addIngredient, updateDropdownValue } = useDropdowns();
-  const { results, resultsSuccess } = useFetchResults(dropdowns);
+  const { results, resultsSuccess } = useFetchCocktailsByIngredients(dropdowns);
   const [resultsDisplayLimit, setResultsDisplayLimit] = useState(10);
 
   const showMoreResults = () => {
