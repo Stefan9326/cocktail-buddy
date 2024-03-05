@@ -1,6 +1,6 @@
 import getDrinksToDisplay from "../../utils/getDrinksToDisplay";
 import PropTypes from "prop-types";
-import { ResultTile } from "../ResultTile/ResultTile";
+import { ResultTile } from "../NameSearchResultTile/NameSearchResultTile";
 import "./IngredientSearchResults.css";
 
 const IngredientSearchResults = ({ results, resultsLimit, dropdowns }) => {

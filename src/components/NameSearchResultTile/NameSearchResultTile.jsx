@@ -2,7 +2,7 @@ import { useState } from "react";
 import { memo } from "react";
 import useFetchCocktailInfo from "../../hooks/useFetchCocktailInfo";
 import PropTypes from "prop-types";
-import "./ResultTile.css";
+import "./NameSearchResultTile.css";
 
 export const ResultTile = memo(function ResultTile({ result, noExactResults, dropdowns }) {
   const [recipeDisplayed, setRecipeDisplayed] = useState(false);
