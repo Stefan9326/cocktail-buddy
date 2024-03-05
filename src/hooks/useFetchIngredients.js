@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchIngredientsList } from "../api";
+import { fetchIngredientsList } from "../utils/api";
 
 const useFetchIngredients = () => {
   const { data: ingredientsList } = useQuery({
