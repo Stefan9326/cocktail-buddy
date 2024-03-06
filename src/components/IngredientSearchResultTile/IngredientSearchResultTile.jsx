@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { memo } from "react";
 import { useFetchCocktailInfo } from "@hooks";
+import { useContext } from "react";
+import { IngredientSearchContext } from "@routes/IngredientSearch";
 import PropTypes from "prop-types";
 import "./IngredientSearchResultTile.css";
 
-export const IngredientSearchResultTile = memo(function ResultTile({ result, noExactResults, dropdowns }) {
+export const IngredientSearchResultTile = memo(function ResultTile({ result, noExactResults }) {
   const [recipeDisplayed, setRecipeDisplayed] = useState(false);
+  const { dropdowns } = useContext(IngredientSearchContext);
   const { cocktailInfo, isSuccess, ingredients, matchedIngredients } = useFetchCocktailInfo(result, dropdowns);
 
   const toggleRecipeDisplay = () => {

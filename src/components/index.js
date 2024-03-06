@@ -1,3 +1,4 @@
+export { DropdownsContainer } from "./DropdownsContainer/DropdownsContainer";
 export { IngredientDropdown } from "./IngredientDropdown/IngredientDropdown";
 export { IngredientSearchResults } from "./IngredientSearchResults/IngredientSearchResults";
 export { IngredientSearchResultTile } from "./IngredientSearchResultTile/IngredientSearchResultTile";
