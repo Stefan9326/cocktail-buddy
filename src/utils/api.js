@@ -10,6 +10,6 @@ export const fetchData = async (url, dynamicValue = "") => {
       return response.data.drinks;
     }
   } catch (error) {
-    throw error(error);
+    console.error("Error fetching data", error);
   }
 };
