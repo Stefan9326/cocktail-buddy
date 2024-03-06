@@ -1,10 +1,10 @@
-import useFetchData from "./useFetchData";
+import { useFetchData } from "./useFetchData";
 import { fetchData } from "../utils/api";
-import getCocktailIngredients from "../utils/getCocktailIngredients";
+import { getCocktailIngredients } from "@utils";
 
 const baseUrl = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
 
-const useFetchCocktailInfo = (result, dropdowns) => {
+export const useFetchCocktailInfo = (result, dropdowns) => {
   let ingredients = [];
   let matchedIngredients = [];
 
@@ -22,5 +22,3 @@ const useFetchCocktailInfo = (result, dropdowns) => {
 
   return { cocktailInfo, isSuccess, ingredients, matchedIngredients };
 };
-
-export default useFetchCocktailInfo;

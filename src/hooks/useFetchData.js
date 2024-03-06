@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-const useFetchData = (queryKey, queryFn) => {
+export const useFetchData = (queryKey, queryFn) => {
   const {
     isLoading,
     isSuccess,
@@ -14,5 +14,3 @@ const useFetchData = (queryKey, queryFn) => {
 
   return { isLoading, isSuccess, results };
 };
-
-export default useFetchData;

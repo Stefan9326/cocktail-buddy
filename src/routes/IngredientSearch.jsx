@@ -1,14 +1,11 @@
 import { useState } from "react";
-import useFetchCocktailsByIngredients from "../hooks/useFetchCocktailsByIngredients";
-import useDropdowns from "../hooks/useDropdowns";
-import { fetchData } from "../utils/api";
-import useFetchData from "../hooks/useFetchData";
-import IngredientDropdown from "../components/IngredientDropdown/IngredientDropdown";
-import IngredientSearchResults from "../components/IngredientSearchResults/IngredientSearchResults";
+import { useFetchCocktailsByIngredients, useDropdowns, useFetchData } from "@hooks";
+import { fetchData } from "@utils";
+import { IngredientDropdown, IngredientSearchResults } from "@components";
 
 const url = "https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list";
 
-const IngredientSearch = () => {
+export const IngredientSearch = () => {
   const { results: ingredientsList } = useFetchData(["ingredients"], () => fetchData(url));
   const { dropdowns, addDropdown, updateDropdownValue, deleteDropdown } = useDropdowns();
   const { results, resultsSuccess } = useFetchCocktailsByIngredients(dropdowns);
@@ -51,5 +48,3 @@ const IngredientSearch = () => {
     </div>
   );
 };
-
-export default IngredientSearch;

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import NameSearchResults from "../components/NameSearchResults/NameSearchResults";
+import { NameSearchResults } from "@components";
 
-const NameSearch = () => {
+export const NameSearch = () => {
   const [inputValue, setInputValue] = useState("");
 
   const handleChange = (event) => {
@@ -15,5 +15,3 @@ const NameSearch = () => {
     </>
   );
 };
-
-export default NameSearch;

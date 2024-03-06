@@ -1,11 +1,11 @@
 import { PropTypes } from "prop-types";
 import { fetchData } from "../../utils/api";
-import useFetchData from "../../hooks/useFetchData";
-import { NameSearchResultTile } from "../NameSearchResultTile/NameSearchResultTile";
+import { useFetchData } from "@hooks";
+import { NameSearchResultTile } from "@components";
 
 const baseUrl = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 
-const NameSearchResults = ({ userInput }) => {
+export const NameSearchResults = ({ userInput }) => {
   const { isLoading, isSuccess, results } = useFetchData(["cocktails", userInput], () => fetchData(baseUrl, userInput));
 
   if (isLoading) return <p>Loading...</p>;
@@ -25,5 +25,3 @@ const NameSearchResults = ({ userInput }) => {
 NameSearchResults.propTypes = {
   userInput: PropTypes.string.isRequired,
 };
-
-export default NameSearchResults;

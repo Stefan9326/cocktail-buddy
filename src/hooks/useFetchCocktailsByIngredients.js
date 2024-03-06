@@ -3,7 +3,7 @@ import { useQueries } from "@tanstack/react-query";
 
 const baseUrl = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=";
 
-const useFetchCocktailsByIngredients = (dropdowns) => {
+export const useFetchCocktailsByIngredients = (dropdowns) => {
   const results = useQueries({
     queries: dropdowns
       .filter((dropdown) => dropdown.value)
@@ -21,5 +21,3 @@ const useFetchCocktailsByIngredients = (dropdowns) => {
 
   return { results, resultsSuccess };
 };
-
-export default useFetchCocktailsByIngredients;

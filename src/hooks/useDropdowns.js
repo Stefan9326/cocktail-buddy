@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const useDropdowns = () => {
+export const useDropdowns = () => {
   const [dropdowns, setDropdowns] = useState([{ id: uuidv4(), value: "" }]);
 
   const addDropdown = () => {
@@ -25,5 +25,3 @@ const useDropdowns = () => {
 
   return { dropdowns, addDropdown, deleteDropdown, updateDropdownValue };
 };
-
-export default useDropdowns;
