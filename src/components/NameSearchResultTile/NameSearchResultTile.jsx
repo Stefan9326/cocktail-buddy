@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { memo } from "react";
-import getCocktailIngredients from "../../utils/getCocktailIngredients";
+import { getCocktailIngredients } from "@utils";
 import PropTypes from "prop-types";
 
 export const NameSearchResultTile = memo(function ResultTile({ result }) {

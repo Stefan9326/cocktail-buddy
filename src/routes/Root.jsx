@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import "./Root.css";
 
-const Root = () => {
+export const Root = () => {
   return (
     <div className="root">
       <img src="src/assets/3-cropped.webp" alt="" width="460px" />
@@ -13,5 +13,3 @@ const Root = () => {
     </div>
   );
 };
-
-export default Root;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { memo } from "react";
-import useFetchCocktailInfo from "../../hooks/useFetchCocktailInfo";
+import { useFetchCocktailInfo } from "@hooks";
 import PropTypes from "prop-types";
 import "./IngredientSearchResultTile.css";
 

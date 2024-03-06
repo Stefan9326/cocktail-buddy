@@ -1,4 +1,4 @@
-const getCocktailIngredients = (cocktailInfo) => {
+export const getCocktailIngredients = (cocktailInfo) => {
   const ingredients = Object.keys(cocktailInfo)
     .filter((key) => key.startsWith("strIngredient") && cocktailInfo[key])
     .map((key) => cocktailInfo[key])
@@ -6,5 +6,3 @@ const getCocktailIngredients = (cocktailInfo) => {
 
   return ingredients;
 };
-
-export default getCocktailIngredients;

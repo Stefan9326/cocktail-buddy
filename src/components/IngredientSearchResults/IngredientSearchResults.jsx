@@ -1,9 +1,9 @@
-import getDrinksToDisplay from "../../utils/getDrinksToDisplay";
+import { getDrinksToDisplay } from "@utils";
+import { IngredientSearchResultTile } from "@components";
 import PropTypes from "prop-types";
-import { IngredientSearchResultTile } from "../IngredientSearchResultTile/IngredientSearchResultTile";
 import "./IngredientSearchResults.css";
 
-const IngredientSearchResults = ({ results, resultsLimit, dropdowns }) => {
+export const IngredientSearchResults = ({ results, resultsLimit, dropdowns }) => {
   const { drinksToDisplay, noExactResults } = getDrinksToDisplay(results);
 
   return (
@@ -28,5 +28,3 @@ IngredientSearchResults.propTypes = {
   results: PropTypes.array.isRequired,
   resultsLimit: PropTypes.number.isRequired,
 };
-
-export default IngredientSearchResults;

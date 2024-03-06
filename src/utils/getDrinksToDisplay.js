@@ -15,7 +15,7 @@ const findCommonDrinks = (drinkCounts, resultsLength) => {
   return Object.keys(drinkCounts).filter((drink) => drinkCounts[drink] === resultsLength);
 };
 
-const getDrinksToDisplay = (results) => {
+export const getDrinksToDisplay = (results) => {
   let drinksToDisplay = results[0];
   let noExactResults = false;
 
@@ -38,5 +38,3 @@ const getDrinksToDisplay = (results) => {
   }
   return { drinksToDisplay, noExactResults };
 };
-
-export default getDrinksToDisplay;
