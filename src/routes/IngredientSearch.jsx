@@ -23,7 +23,7 @@ export const IngredientSearch = () => {
             <IngredientDropdown
               id={dropdown.id}
               updateDropdownValue={updateDropdownValue}
-              ingredients={ingredientsList}
+              ingredientsList={ingredientsList}
             />
             {dropdowns.length > 1 && <button onClick={() => deleteDropdown(dropdown.id)}>Delete</button>}
           </div>
