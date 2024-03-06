@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 export const useFetchData = (queryKey, queryFn) => {
   const {
     isLoading,
+    isError,
+    error,
     isSuccess,
     data: results,
   } = useQuery({
@@ -12,5 +14,5 @@ export const useFetchData = (queryKey, queryFn) => {
     cacheTime: Infinity,
   });
 
-  return { isLoading, isSuccess, results };
+  return { isLoading, isError, error, isSuccess, results };
 };
