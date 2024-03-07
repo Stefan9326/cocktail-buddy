@@ -2,6 +2,7 @@ import { IngredientDropdown } from "@components";
 import { useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { IngredientSearchContext } from "@routes/IngredientSearch";
+import "./DropdownsContainer.css";
 
 export const DropdownsContainer = () => {
   const { dropdowns, setDropdowns, ingredientsList } = useContext(IngredientSearchContext);
@@ -26,10 +27,10 @@ export const DropdownsContainer = () => {
   };
 
   return (
-    <>
+    <div className="dropdowns-container">
       {ingredientsList &&
         dropdowns.map((dropdown) => (
-          <div key={dropdown.id}>
+          <div key={dropdown.id} className="dropdown-and-btn-container">
             <IngredientDropdown
               id={dropdown.id}
               updateDropdownValue={updateDropdownValue}
@@ -45,6 +46,6 @@ export const DropdownsContainer = () => {
           </button>
         </>
       )}
-    </>
+    </div>
   );
 };
