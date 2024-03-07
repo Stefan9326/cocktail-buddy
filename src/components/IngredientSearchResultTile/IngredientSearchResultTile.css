@@ -40,3 +40,12 @@
     height: 100px;
   }
 }
+
+.matched-ingredient {
+  font-size: 0.8em;
+  font-weight: 500;
+  border-radius: 5px;
+  padding: 1px 10px;
+  color: white;
+  background-color: #4a90a1;
+}
