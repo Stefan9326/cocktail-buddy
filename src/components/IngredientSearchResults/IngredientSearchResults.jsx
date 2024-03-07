@@ -14,7 +14,12 @@ export const IngredientSearchResults = ({ results, dropdowns }) => {
 
   return (
     <div className="results-container">
-      {noExactResults && <p>No exact results found</p>}
+      {noExactResults && (
+        <>
+          <p>We couldn&apos;t find any cocktails including all of the selected ingredients</p>
+          <p>Below you can find cocktails that include one or more of the ingredients you selected</p>
+        </>
+      )}
       {drinksToDisplay.slice(0, resultsDisplayLimit).map((result) => {
         return (
           <IngredientSearchResultTile

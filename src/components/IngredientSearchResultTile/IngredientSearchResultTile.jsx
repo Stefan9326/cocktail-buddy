@@ -19,14 +19,14 @@ export const IngredientSearchResultTile = memo(function ResultTile({ result, noE
     <div className="result-tile">
       <div className="initial-info">
         {result.strDrink}
-        {noExactResults && (
-          <p>
-            Matched ingredients:{" "}
-            <em>
-              <strong>{matchedIngredients.join(", ")}</strong>
-            </em>
-          </p>
-        )}
+        {noExactResults &&
+          matchedIngredients.map((ingredient) => {
+            return (
+              <p className="matched-ingredient" key={ingredient}>
+                {ingredient}
+              </p>
+            );
+          })}
         <div className="right">
           <img src={result.strDrinkThumb} alt={`Photo of ${result.strDrink}`} />
           <button onClick={toggleRecipeDisplay}>Show recipe</button>
